@@ -1,4 +1,4 @@
-# Introduction
+THIS REPOSIOTRY IS HANS_ON FOR [How to build a blockchain in python - Dante Sblendorio, Activestate](https://www.activestate.com/blog/how-to-build-a-blockchain-in-python/).
 
 ## What is a blockchain?
 
@@ -33,6 +33,25 @@ Average work required to creat a block increases exponentially with the number o
 
 If new block is created, then it will initially stored in unconfirmed transactions. After confirming the new block is a valid proof(satisfying difficulty criteria), then the block is added in chain officially.
 This process commonly known as `mining`.
+
+## Usage Guide
+
+Run flask server in local first.
+```bash
+$ python3 api.py
+```
+
+Get all existing block data in chain. 
+```bash
+$ curl http://127.0.0.1:5000/chain
+```
+
+Create new block with custom transaction to chain.
+```bash
+$ curl -X POST http://127.0.0.1:5000/block \
+  -H 'Content-Type: application/x-www-form_urlencoded' \
+  -d '{"transaction":"PUT SOME TRANSACTION"}' 
+```
 
 
 

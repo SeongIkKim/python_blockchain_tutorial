@@ -24,7 +24,7 @@ class Blockchain:
     difficulty = 2
     def proof_of_work(self, block):
         block.nonce = 1 # arbitrary
-        compute_hash = block.compute_hash()
+        computed_hash = block.compute_hash()
 
         # This loop enormously increase workload to modify previous block because every following block nonces should be recomputed.
         while not computed_hash.startswith('0' * Blockchain.difficulty):
