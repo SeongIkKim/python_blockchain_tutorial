@@ -18,4 +18,7 @@ These qualities are necessary to maintain integrity of blockchain and the securi
 Immutability can be implemented using a cryptographic hash function.
 You can check whether the value is right by hashing value without disclosing value itself.
 
+In order to ensure the immutability of the entire blockchain, approach of including a hash of the previous block within current block will be used.
+It helps to protecting chain's integrity(partially, at least).
+
 
