@@ -20,3 +20,51 @@ class Blockchain:
     @property # getter
     def last_block(self):
         return self.chain[-1]
+
+    difficulty = 2
+    def proof_of_work(self, block):
+        block.nonce = 1 # arbitrary
+        compute_hash = block.compute_hash()
+
+        # This loop enormously increase workload to modify previous block because every following block nonces should be recomputed.
+        while not computed_hash.startswith('0' * Blockchain.difficulty):
+            block.nonce += 1
+            computed_hash = block.compute_hash()
+        return computed_hash
+
+    def add_block(self, block, proof):
+        previous_hash = self.last_block.hash
+        if previous_hash != block.previous_hash:
+            return False
+        if not self.is_valid_proof(block, proof):
+            return False
+        block.hash = proof
+        self.chain.append(block)
+        return True
+
+    def is_valid_proof(self, block, block_hash):
+        """
+        1. Check if difficulty is correct
+        2. Check if hash value of newly added block is same with proof(block_hash)
+        """
+        return (block_hash.startswith('0' * Blockchain.difficulty)
+                and block_hash == block.compute_hash())
+
+    def add_new_transaction(self, transaction):
+        """New transaction might be fabricated"""
+        self.unconfirmed_transactions.append(transaction)
+
+    def mine(self):
+        if not self.unconfirmed_transactions:
+            return False
+
+        last_block = self.last_block
+
+        new_block = Block(index=last_block.index + 1,
+                          transactions=self.unconfirmed_transactions,
+                          timestamp=time.time(),
+                          previous_hash=last_block.hash)
+        proof = self.proof_of_work(new_block)
+        self.add_block(new_block, proof)
+        self.unconfirmed_transactions = []
+        return new_block.index

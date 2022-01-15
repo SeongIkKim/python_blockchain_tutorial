@@ -3,6 +3,8 @@ from hashlib import sha256
 
 
 class Block:
+    hash = None  # filled by compute_hash when block instance is created
+
     def __init__(self, index, transactions, timestamp, previous_hash, nonce=0):
         self.index = index
         self.transactions = transactions
